@@ -273,7 +273,7 @@ public void CL_OnEndTimerPress(int client)
 						g_fReplayTimes[0][0] = g_fFinalTime[client];
 						CreateTimer(3.0, ReplayTimer, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
 					}
-					wrCredits = 500;
+					wrCredits = 250;
 				}
 			}
 			else
