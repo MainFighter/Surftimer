@@ -1763,10 +1763,10 @@ public void OnMapStart()
 	// Playtime
 	CreateTimer(1.0, PlayTimeTimer, INVALID_HANDLE, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	
-	// if (FindPluginByFile("store.smx") != INVALID_HANDLE)
-	// 	LogMessage("Store plugin has been found! Timer credits enabled.");
-	// else 
-	// 	LogMessage("Store not found! Timer credits have been disabled");
+	if (FindPluginByFile("store.smx") != INVALID_HANDLE)
+		LogMessage("Store plugin has been found! Timer credits enabled.");
+	else 
+		LogMessage("Store not found! Timer credits have been disabled");
 	
 	// Server Announcements
 	g_iServerID = GetConVarInt(g_hServerID);
