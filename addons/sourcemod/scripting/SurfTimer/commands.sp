@@ -4696,7 +4696,7 @@ public int CommsVoteHandle(Menu menu, MenuAction action, int param1, int param2)
 		GetMenuVoteInfo(param2, votes, totalVotes);
 
 		if (strcmp(item, VOTE_NO) == 0 && param1 == 1)
-		votes = totalVotes  votes;
+		votes = totalVotes - votes;
 
 		percent = FloatDiv(float(votes),float(totalVotes));
 		limit = 0.75;
