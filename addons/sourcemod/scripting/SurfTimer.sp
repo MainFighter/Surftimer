@@ -23,7 +23,7 @@
 #include <dhooks>
 #include <mapchooser>
 #include <sdktools>
-// #include <store>
+#include <store>
 #include <discord>
 #include <sourcecomms>
 #include <surftimer>
@@ -1195,7 +1195,7 @@ int g_iSelectedTrigger[MAXPLAYERS + 1];
 // Store
 int g_iMapTier;
 bool g_bRankedMap;
-// Handle g_hStore;
+Handle g_hStore;
 
 // Late Load Linux fix
 Handle g_cvar_sv_hibernate_when_empty = INVALID_HANDLE;
@@ -1231,6 +1231,11 @@ float g_fStageReplayTimes[CPLIMIT];
 int g_iServerID;
 int g_iLastID;
 bool g_bHasLatestID;
+
+// Comms Vote Menu
+int g_iCommsVoteCaller;
+int g_iCommsVoteType[MAXPLAYERS + 1];
+int g_iCommsVoteTarget[MAXPLAYERS + 1];
 
 // Show Triggers https://forums.alliedmods.net/showthread.php?t=290356
 int g_iTriggerTransmitCount;
@@ -1759,10 +1764,10 @@ public void OnMapStart()
 	// Playtime
 	CreateTimer(1.0, PlayTimeTimer, INVALID_HANDLE, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	
-	// if (FindPluginByFile("store.smx") != INVALID_HANDLE)
-	// 	LogMessage("Store plugin has been found! Timer credits enabled.");
-	// else 
-	// 	LogMessage("Store not found! Timer credits have been disabled");
+	if (FindPluginByFile("store.smx") != INVALID_HANDLE)
+		LogMessage("Store plugin has been found! Timer credits enabled.");
+	else 
+		LogMessage("Store not found! Timer credits have been disabled");
 	
 	// Server Announcements
 	g_iServerID = GetConVarInt(g_hServerID);
@@ -1823,8 +1828,8 @@ public void OnMapEnd()
 
 	CloseHandle(g_mTriggerMultipleMenu);
 
-	// if (g_hStore != null)
-	// 	CloseHandle(g_hStore);
+	if (g_hStore != null)
+		CloseHandle(g_hStore);
 
 	if (g_hDestinations != null)
 		CloseHandle(g_hDestinations);
@@ -2730,7 +2735,7 @@ public void OnPluginStart()
 public void OnAllPluginsLoaded()
 {
 	// Check if store is running
-	// g_hStore = FindPluginByFile("store.smx");
+	g_hStore = FindPluginByFile("store.smx");
 }
 
 /*======  End of Events  ======*/

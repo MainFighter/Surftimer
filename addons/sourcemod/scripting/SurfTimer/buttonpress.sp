@@ -196,13 +196,12 @@ public void CL_OnEndTimerPress(int client)
 	// PrintHintText(client, "%t", "TimerStopped", g_szFinalTime[client]);
 
 	// how much credits to give
-	// first complete
-	// int fcTierCredits = (100 * g_iMapTier);
-	// int tierCredits = (5 * g_iMapTier);
-	// int wrCredits = 0;
-	// int fcCredits = 0;
-	// int pbCredits = 0;
-	// int slowCredits = 0;
+	int fcTierCredits = (50 * g_iMapTier);	// first complete
+	int tierCredits = (5 * g_iMapTier);
+	int wrCredits = 0;
+	int fcCredits = 0;
+	int pbCredits = 0;
+	int slowCredits = 0;
 
 	// Get zonegroup and style
 	int zGroup = g_iClientInZone[client][2];
@@ -274,7 +273,7 @@ public void CL_OnEndTimerPress(int client)
 						g_fReplayTimes[0][0] = g_fFinalTime[client];
 						CreateTimer(3.0, ReplayTimer, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
 					}
-					// wrCredits = 500;
+					wrCredits = 250;
 				}
 			}
 			else
@@ -305,7 +304,7 @@ public void CL_OnEndTimerPress(int client)
 					g_bCheckpointRecordFound[zGroup] = true;
 				}
 
-				// wrCredits = fcTierCredits;
+				wrCredits = fcTierCredits;
 			}
 
 
@@ -323,7 +322,7 @@ public void CL_OnEndTimerPress(int client)
 
 				db_selectRecord(client);
 
-				// fcCredits = fcTierCredits;
+				fcCredits = fcTierCredits;
 			}
 			else if (diff > 0.0)
 			{
@@ -337,13 +336,13 @@ public void CL_OnEndTimerPress(int client)
 
 				db_selectRecord(client);
 
-				// pbCredits = tierCredits;
+				pbCredits = tierCredits;
 			}
 			if (!g_bMapSRVRecord[client] && !g_bMapFirstRecord[client] && !g_bMapPBRecord[client])
 			{
 				// for ck_min_rank_announce
 				db_currentRunRank(client);
-				// slowCredits = 1 * g_iMapTier;
+				slowCredits = 1 * g_iMapTier;
 			}
 		}
 		else if (style != 0)
@@ -723,13 +722,13 @@ public void CL_OnEndTimerPress(int client)
 	db_deleteTmp(client);
 
 	// Give Credits
-	// if (g_hStore != INVALID_HANDLE && GetPluginStatus(g_hStore) == Plugin_Running)
-	// {
-		// 	int totalCredits = (wrCredits + fcCredits + pbCredits + slowCredits);
-		// 	int credits = Store_GetClientCredits(client);
-		// 	Store_SetClientCredits(client, credits + totalCredits);
-		// 	CPrintToChat(client, "%t", "BPress7", g_szChatPrefix, totalCredits);
-	// }
+	if (g_hStore != INVALID_HANDLE && GetPluginStatus(g_hStore) == Plugin_Running)
+	{
+	 	int totalCredits = (wrCredits + fcCredits + pbCredits + slowCredits);
+	 	int credits = Store_GetClientCredits(client);
+	 	Store_SetClientCredits(client, credits + totalCredits);
+	 	CPrintToChat(client, "%t", "BPress7", g_szChatPrefix, totalCredits);
+	}
 }
 
 // Start Timer
